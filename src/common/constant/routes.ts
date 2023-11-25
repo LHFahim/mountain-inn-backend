@@ -12,4 +12,11 @@ export const Routes = {
     updateOne: ':id',
     deleteOne: ':id',
   },
+  [ControllersEnum.Cabins]: {
+    Create: '',
+    findAll: '',
+    findOne: ':id',
+    updateOne: ':id',
+    deleteOne: ':id',
+  },
 } as const;

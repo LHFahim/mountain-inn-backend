@@ -5,6 +5,8 @@ import { AppService } from './app.service';
 import { validate } from './config/env.validation';
 import { UserModule } from './user/user.module';
 import { AuthModule } from './auth/auth.module';
+import { CabinModule } from './cabin/cabin.module';
+import { GuestModule } from './guest/guest.module';
 
 @Module({
   imports: [
@@ -19,6 +21,8 @@ import { AuthModule } from './auth/auth.module';
     ConfigModule,
     UserModule,
     AuthModule,
+    CabinModule,
+    GuestModule,
   ],
   controllers: [],
   providers: [AppService, ConfigService],

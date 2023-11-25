@@ -8,7 +8,6 @@ import {
   IsOptional,
   IsPhoneNumber,
   IsString,
-  ValidateIf,
 } from 'class-validator';
 import { Model } from 'libraries/mongodb/modelOptions';
 import { DocumentWithTimeStamps } from 'src/common/classes/documentWithTimeStamps';
