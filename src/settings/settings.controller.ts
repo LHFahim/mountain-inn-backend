@@ -1,9 +1,27 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
-import { SettingsService } from './settings.service';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Patch,
+  Post,
+  UseGuards,
+} from '@nestjs/common';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
+import { Serialize } from 'libraries/serializer/serializer.decorator';
+import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
+import { APIVersions } from 'src/common/enum/api-versions.enum';
+import { ControllersEnum } from 'src/common/enum/controllers.enum';
 import { CreateSettingDto } from './dto/create-setting.dto';
 import { UpdateSettingDto } from './dto/update-setting.dto';
+import { SettingsService } from './settings.service';
 
-@Controller('settings')
+@Serialize()
+@ApiBearerAuth()
+@ApiTags('Settings')
+@UseGuards(JwtAuthGuard)
+@Controller({ path: ControllersEnum.Settings, version: APIVersions.V1 })
 export class SettingsController {
   constructor(private readonly settingsService: SettingsService) {}
 

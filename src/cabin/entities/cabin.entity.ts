@@ -3,6 +3,7 @@ import { Prop } from '@typegoose/typegoose';
 import { Expose } from 'class-transformer';
 import {
   IsArray,
+  IsEnum,
   IsNotEmpty,
   IsNumber,
   IsOptional,
@@ -11,6 +12,11 @@ import {
 } from 'class-validator';
 import { Model } from 'libraries/mongodb/modelOptions';
 import { DocumentWithTimeStamps } from 'src/common/classes/documentWithTimeStamps';
+
+export enum CabinStatusEnum {
+  AVAILABLE = 'AVAILABLE',
+  UNAVAILABLE = 'UNAVAILABLE',
+}
 
 @Model('cabins', true)
 export class CabinEntity extends DocumentWithTimeStamps {
@@ -58,6 +64,17 @@ export class CabinEntity extends DocumentWithTimeStamps {
   @Prop({ required: true })
   @ApiProperty({ required: true })
   discount: number;
+
+  @Expose()
+  @IsNotEmpty()
+  @IsEnum(CabinStatusEnum)
+  @ApiProperty({
+    required: true,
+    enum: CabinStatusEnum,
+    default: CabinStatusEnum.AVAILABLE,
+  })
+  @Prop({ required: true, enum: CabinStatusEnum })
+  status: CabinStatusEnum;
 
   @Expose()
   @IsString()

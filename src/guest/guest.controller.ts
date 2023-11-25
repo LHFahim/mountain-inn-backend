@@ -1,9 +1,27 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
-import { GuestService } from './guest.service';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Patch,
+  Post,
+  UseGuards,
+} from '@nestjs/common';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
+import { Serialize } from 'libraries/serializer/serializer.decorator';
+import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
+import { APIVersions } from 'src/common/enum/api-versions.enum';
+import { ControllersEnum } from 'src/common/enum/controllers.enum';
 import { CreateGuestDto } from './dto/create-guest.dto';
 import { UpdateGuestDto } from './dto/update-guest.dto';
+import { GuestService } from './guest.service';
 
-@Controller('guest')
+@Serialize()
+@ApiBearerAuth()
+@ApiTags('Guests')
+@UseGuards(JwtAuthGuard)
+@Controller({ path: ControllersEnum.Guests, version: APIVersions.V1 })
 export class GuestController {
   constructor(private readonly guestService: GuestService) {}
 

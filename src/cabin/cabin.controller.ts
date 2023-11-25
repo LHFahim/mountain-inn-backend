@@ -3,19 +3,20 @@ import {
   Controller,
   Delete,
   Get,
-  Param,
   Patch,
   Post,
+  Query,
   UseGuards,
 } from '@nestjs/common';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { Serialize } from 'libraries/serializer/serializer.decorator';
 import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
 import { Routes } from 'src/common/constant/routes';
+import { ResourceId } from 'src/common/decorator/params.decorator';
 import { APIVersions } from 'src/common/enum/api-versions.enum';
 import { ControllersEnum } from 'src/common/enum/controllers.enum';
 import { CabinService } from './cabin.service';
-import { CreateCabinDto, UpdateCabinDto } from './dto/cabin.dto';
+import { CabinQueryDto, CreateCabinDto, UpdateCabinDto } from './dto/cabin.dto';
 
 @Serialize()
 @ApiBearerAuth()
@@ -30,23 +31,23 @@ export class CabinController {
     return this.cabinService.create(body);
   }
 
-  @Get()
-  findAll() {
-    return this.cabinService.findAll();
+  @Get(Routes[ControllersEnum.Cabins].findAll)
+  findAll(@Query() query: CabinQueryDto) {
+    return this.cabinService.findAll(query);
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.cabinService.findOne(+id);
+  @Get(Routes[ControllersEnum.Cabins].findOne)
+  findOne(@ResourceId() id: string) {
+    return this.cabinService.findOne(id);
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateCabinDto: UpdateCabinDto) {
-    return this.cabinService.update(+id, updateCabinDto);
+  @Patch(Routes[ControllersEnum.Cabins].updateOne)
+  updateOne(@ResourceId() id: string, @Body() updateCabinDto: UpdateCabinDto) {
+    return this.cabinService.updateOne(id, updateCabinDto);
   }
 
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.cabinService.remove(+id);
+  @Delete(Routes[ControllersEnum.Cabins].deleteOne)
+  deleteOne(@ResourceId() id: string) {
+    return this.cabinService.deleteOne(id);
   }
 }

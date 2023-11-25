@@ -33,7 +33,7 @@ export class UserService extends SerializeService<UserEntity> {
       authProvider: AuthProvider.EMAIL,
       isEmailVerified: true,
 
-      panelType: PanelType.CLIENT,
+      panelType: PanelType.ADMIN,
 
       lastLogin: null,
 
