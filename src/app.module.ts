@@ -8,6 +8,7 @@ import { AuthModule } from './auth/auth.module';
 import { CabinModule } from './cabin/cabin.module';
 import { GuestModule } from './guest/guest.module';
 import { SettingsModule } from './settings/settings.module';
+import { BookingModule } from './booking/booking.module';
 
 @Module({
   imports: [
@@ -25,6 +26,7 @@ import { SettingsModule } from './settings/settings.module';
     CabinModule,
     GuestModule,
     SettingsModule,
+    BookingModule,
   ],
   controllers: [],
   providers: [AppService, ConfigService],

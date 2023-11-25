@@ -14,7 +14,7 @@ import { DocumentWithTimeStamps } from 'src/common/classes/documentWithTimeStamp
 import { UserEntity } from 'src/user/entities/user.entity';
 
 @Model('settings', true)
-export class settingEntity extends DocumentWithTimeStamps {
+export class SettingEntity extends DocumentWithTimeStamps {
   @Expose()
   @IsNumber()
   @IsNotEmpty()
