@@ -3,18 +3,19 @@ import {
   Controller,
   Delete,
   Get,
-  Param,
   Patch,
   Post,
+  Query,
   UseGuards,
 } from '@nestjs/common';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { Serialize } from 'libraries/serializer/serializer.decorator';
 import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
+import { Routes } from 'src/common/constant/routes';
+import { ResourceId } from 'src/common/decorator/params.decorator';
 import { APIVersions } from 'src/common/enum/api-versions.enum';
 import { ControllersEnum } from 'src/common/enum/controllers.enum';
-import { CreateGuestDto } from './dto/create-guest.dto';
-import { UpdateGuestDto } from './dto/update-guest.dto';
+import { CreateGuestDto, GuestQueryDto, UpdateGuestDto } from './dto/guest.dto';
 import { GuestService } from './guest.service';
 
 @Serialize()
@@ -25,28 +26,28 @@ import { GuestService } from './guest.service';
 export class GuestController {
   constructor(private readonly guestService: GuestService) {}
 
-  @Post()
+  @Post(Routes[ControllersEnum.Guests].create)
   create(@Body() createGuestDto: CreateGuestDto) {
     return this.guestService.create(createGuestDto);
   }
 
-  @Get()
-  findAll() {
-    return this.guestService.findAll();
+  @Get(Routes[ControllersEnum.Guests].findAll)
+  findAll(@Query() query: GuestQueryDto) {
+    return this.guestService.findAll(query);
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.guestService.findOne(+id);
+  @Get(Routes[ControllersEnum.Guests].findOne)
+  findOne(@ResourceId() id: string) {
+    return this.guestService.findOne(id);
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateGuestDto: UpdateGuestDto) {
-    return this.guestService.update(+id, updateGuestDto);
+  @Patch(Routes[ControllersEnum.Guests].updateOne)
+  updateOne(@ResourceId() id: string, @Body() updateGuestDto: UpdateGuestDto) {
+    return this.guestService.updateOne(id, updateGuestDto);
   }
 
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.guestService.remove(+id);
+  @Delete(Routes[ControllersEnum.Guests].deleteOne)
+  deleteOne(@ResourceId() id: string) {
+    return this.guestService.deleteOne(id);
   }
 }

@@ -13,7 +13,21 @@ export const Routes = {
     deleteOne: ':id',
   },
   [ControllersEnum.Cabins]: {
-    Create: '',
+    create: '',
+    findAll: '',
+    findOne: ':id',
+    updateOne: ':id',
+    deleteOne: ':id',
+  },
+  [ControllersEnum.Guests]: {
+    create: '',
+    findAll: '',
+    findOne: ':id',
+    updateOne: ':id',
+    deleteOne: ':id',
+  },
+  [ControllersEnum.Bookings]: {
+    create: '',
     findAll: '',
     findOne: ':id',
     updateOne: ':id',

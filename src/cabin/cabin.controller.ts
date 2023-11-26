@@ -26,7 +26,7 @@ import { CabinQueryDto, CreateCabinDto, UpdateCabinDto } from './dto/cabin.dto';
 export class CabinController {
   constructor(private readonly cabinService: CabinService) {}
 
-  @Post(Routes[ControllersEnum.Cabins].Create)
+  @Post(Routes[ControllersEnum.Cabins].create)
   create(@Body() body: CreateCabinDto) {
     return this.cabinService.create(body);
   }

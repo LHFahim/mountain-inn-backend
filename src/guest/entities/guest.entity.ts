@@ -52,13 +52,6 @@ export class GuestEntity extends DocumentWithTimeStamps {
   nationality: string;
 
   @Expose()
-  @IsString()
-  @IsNotEmpty()
-  @ApiProperty({ required: true })
-  @Prop({ required: true, trim: true })
-  countryFlag: string;
-
-  @Expose()
   @IsMongoId()
   @Type(() => UserProfileDto)
   @ApiProperty({ required: true, type: UserProfileDto })
