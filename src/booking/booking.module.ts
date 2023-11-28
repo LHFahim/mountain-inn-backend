@@ -1,8 +1,11 @@
 import { Module } from '@nestjs/common';
-import { BookingService } from './booking.service';
+import { TypegooseModule } from 'nestjs-typegoose';
 import { BookingController } from './booking.controller';
+import { BookingService } from './booking.service';
+import { BookingEntity } from './entities/booking.entity';
 
 @Module({
+  imports: [TypegooseModule.forFeature([BookingEntity])],
   controllers: [BookingController],
   providers: [BookingService],
 })

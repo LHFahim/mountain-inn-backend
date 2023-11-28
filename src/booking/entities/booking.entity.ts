@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { Prop, Ref } from '@typegoose/typegoose';
+import { Prop } from '@typegoose/typegoose';
 import { Expose, Type } from 'class-transformer';
 import {
   IsDateString,
@@ -14,7 +14,13 @@ import { Model } from 'libraries/mongodb/modelOptions';
 import { CabinEntity } from 'src/cabin/entities/cabin.entity';
 import { DocumentWithTimeStamps } from 'src/common/classes/documentWithTimeStamps';
 import { GuestEntity } from 'src/guest/entities/guest.entity';
-import { BookingStatus } from '../dto/update-booking.dto';
+
+export enum BookingStatus {
+  UNCONFIRMED = 'UNCONFIRMED',
+  NOT_ARRIVED = 'NOT_ARRIVED',
+  CHECKED_IN = 'CHECKED_IN',
+  CHECKED_OUT = 'CHECKED_OUT',
+}
 
 @Model('bookings', true)
 export class BookingEntity extends DocumentWithTimeStamps {
@@ -49,6 +55,30 @@ export class BookingEntity extends DocumentWithTimeStamps {
   numberOfGuests: number;
 
   @Expose()
+  @IsNumber()
+  @IsNotEmpty()
+  @IsPositive()
+  @Prop({ required: true })
+  @ApiProperty({ required: true })
+  cabinPrice: number;
+
+  @Expose()
+  @IsNumber()
+  @IsNotEmpty()
+  @IsPositive()
+  @Prop({ required: true })
+  @ApiProperty({ required: true })
+  extraPrice: number;
+
+  @Expose()
+  @IsNumber()
+  @IsNotEmpty()
+  @IsPositive()
+  @Prop({ required: true })
+  @ApiProperty({ required: true })
+  totalPrice: number;
+
+  @Expose()
   @IsNotEmpty()
   @IsEnum(BookingStatus)
   @ApiProperty({
@@ -64,14 +94,14 @@ export class BookingEntity extends DocumentWithTimeStamps {
   @Type(() => CabinEntity)
   @ApiProperty({ required: true, type: CabinEntity })
   @Prop({ required: false, ref: () => CabinEntity })
-  cabin: Ref<CabinEntity>;
+  cabin: string;
 
   @Expose()
   @IsMongoId()
   @Type(() => GuestEntity)
   @ApiProperty({ required: true, type: GuestEntity })
   @Prop({ required: false, ref: () => GuestEntity })
-  guest: Ref<GuestEntity>;
+  guest: string;
 
   @Expose()
   @IsString()

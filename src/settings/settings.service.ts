@@ -1,11 +1,27 @@
 import { Injectable } from '@nestjs/common';
-import { CreateSettingDto } from './dto/create-setting.dto';
-import { UpdateSettingDto } from './dto/update-setting.dto';
+import { ReturnModelType } from '@typegoose/typegoose';
+import { SerializeService } from 'libraries/serializer/serialize';
+import { InjectModel } from 'nestjs-typegoose';
+import {
+  CreateSettingDto,
+  SettingDto,
+  UpdateSettingDto,
+} from './dto/setting.dto';
+import { SettingEntity } from './entities/setting.entity';
 
 @Injectable()
-export class SettingsService {
-  create(createSettingDto: CreateSettingDto) {
-    return 'This action adds a new setting';
+export class SettingsService extends SerializeService<SettingEntity> {
+  constructor(
+    @InjectModel(SettingEntity)
+    private readonly settingModel: ReturnModelType<typeof SettingEntity>,
+  ) {
+    super(SettingEntity);
+  }
+
+  async create(body: CreateSettingDto) {
+    const setting = await this.settingModel.create({ ...body });
+
+    return this.toJSON(setting, SettingDto);
   }
 
   findAll() {
@@ -16,11 +32,11 @@ export class SettingsService {
     return `This action returns a #${id} setting`;
   }
 
-  update(id: number, updateSettingDto: UpdateSettingDto) {
+  updateOne(id: number, updateSettingDto: UpdateSettingDto) {
     return `This action updates a #${id} setting`;
   }
 
-  remove(id: number) {
+  deleteOne(id: number) {
     return `This action removes a #${id} setting`;
   }
 }

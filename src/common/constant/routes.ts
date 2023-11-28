@@ -33,4 +33,11 @@ export const Routes = {
     updateOne: ':id',
     deleteOne: ':id',
   },
+  [ControllersEnum.Settings]: {
+    create: '',
+    findAll: '',
+    findOne: ':id',
+    updateOne: ':id',
+    deleteOne: ':id',
+  },
 } as const;

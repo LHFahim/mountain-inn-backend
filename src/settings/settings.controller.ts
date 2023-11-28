@@ -11,10 +11,10 @@ import {
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { Serialize } from 'libraries/serializer/serializer.decorator';
 import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
+import { Routes } from 'src/common/constant/routes';
 import { APIVersions } from 'src/common/enum/api-versions.enum';
 import { ControllersEnum } from 'src/common/enum/controllers.enum';
-import { CreateSettingDto } from './dto/create-setting.dto';
-import { UpdateSettingDto } from './dto/update-setting.dto';
+import { CreateSettingDto, UpdateSettingDto } from './dto/setting.dto';
 import { SettingsService } from './settings.service';
 
 @Serialize()
@@ -25,28 +25,31 @@ import { SettingsService } from './settings.service';
 export class SettingsController {
   constructor(private readonly settingsService: SettingsService) {}
 
-  @Post()
-  create(@Body() createSettingDto: CreateSettingDto) {
-    return this.settingsService.create(createSettingDto);
+  @Post(Routes[ControllersEnum.Settings].create)
+  create(@Body() body: CreateSettingDto) {
+    return this.settingsService.create(body);
   }
 
-  @Get()
+  @Get(Routes[ControllersEnum.Settings].findAll)
   findAll() {
     return this.settingsService.findAll();
   }
 
-  @Get(':id')
+  @Get(Routes[ControllersEnum.Settings].findOne)
   findOne(@Param('id') id: string) {
     return this.settingsService.findOne(+id);
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateSettingDto: UpdateSettingDto) {
-    return this.settingsService.update(+id, updateSettingDto);
+  @Patch(Routes[ControllersEnum.Settings].updateOne)
+  updateOne(
+    @Param('id') id: string,
+    @Body() updateSettingDto: UpdateSettingDto,
+  ) {
+    return this.settingsService.updateOne(+id, updateSettingDto);
   }
 
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.settingsService.remove(+id);
+  @Delete(Routes[ControllersEnum.Settings].deleteOne)
+  deleteOne(@Param('id') id: string) {
+    return this.settingsService.deleteOne(+id);
   }
 }

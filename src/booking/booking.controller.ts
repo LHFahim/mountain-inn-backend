@@ -3,19 +3,24 @@ import {
   Controller,
   Delete,
   Get,
-  Param,
   Patch,
   Post,
+  Query,
   UseGuards,
 } from '@nestjs/common';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { Serialize } from 'libraries/serializer/serializer.decorator';
 import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
+import { Routes } from 'src/common/constant/routes';
+import { ResourceId } from 'src/common/decorator/params.decorator';
 import { APIVersions } from 'src/common/enum/api-versions.enum';
 import { ControllersEnum } from 'src/common/enum/controllers.enum';
 import { BookingService } from './booking.service';
-import { CreateBookingDto } from './dto/create-booking.dto';
-import { UpdateBookingDto } from './dto/update-booking.dto';
+import {
+  BookingQueryDto,
+  CreateBookingDto,
+  UpdateBookingDto,
+} from './dto/booking.dto';
 
 @ApiTags('Bookings')
 @Serialize()
@@ -25,28 +30,31 @@ import { UpdateBookingDto } from './dto/update-booking.dto';
 export class BookingController {
   constructor(private readonly bookingService: BookingService) {}
 
-  @Post()
-  create(@Body() createBookingDto: CreateBookingDto) {
-    return this.bookingService.create(createBookingDto);
+  @Post(Routes[ControllersEnum.Bookings].create)
+  create(@Body() body: CreateBookingDto) {
+    return this.bookingService.create(body);
   }
 
-  @Get()
-  findAll() {
-    return this.bookingService.findAll();
+  @Get(Routes[ControllersEnum.Bookings].findAll)
+  findAll(@Query() query: BookingQueryDto) {
+    return this.bookingService.findAll(query);
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.bookingService.findOne(+id);
+  @Get(Routes[ControllersEnum.Bookings].findOne)
+  findOne(@ResourceId() id: string) {
+    return this.bookingService.findOne(id);
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateBookingDto: UpdateBookingDto) {
-    return this.bookingService.update(+id, updateBookingDto);
+  @Patch(Routes[ControllersEnum.Bookings].updateOne)
+  updateOne(
+    @ResourceId() id: string,
+    @Body() updateBookingDto: UpdateBookingDto,
+  ) {
+    return this.bookingService.updateOne(id, updateBookingDto);
   }
 
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.bookingService.remove(+id);
+  @Delete(Routes[ControllersEnum.Bookings].deleteOne)
+  deleteOne(@ResourceId() id: string) {
+    return this.bookingService.deleteOne(id);
   }
 }
