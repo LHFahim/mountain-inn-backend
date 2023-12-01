@@ -39,7 +39,7 @@ export class CabinService extends SerializeService<CabinEntity> {
 
   async findAll(query: CabinQueryDto): Promise<CabinPaginatedDto> {
     const cabins = await this.cabinModel
-      .find()
+      .find({ isDeleted: false, isActive: true })
       .sort({ [query.sortBy]: query.sort })
       .limit(query.pageSize)
       .skip((query.page - 1) * query.pageSize);

@@ -23,6 +23,12 @@ async function bootstrap() {
 
   app.useGlobalPipes(validationPipe);
 
+  app.enableCors({
+    allowedHeaders: '*',
+    origin: '*',
+    credentials: true,
+  });
+
   const config = new DocumentBuilder()
     .setTitle('Mountain Inn')
     .setDescription('Mountain Inn API description')
