@@ -18,6 +18,7 @@ export const Routes = {
     findOne: ':id',
     updateOne: ':id',
     deleteOne: ':id',
+    uploadImage: 'upload/image',
   },
   [ControllersEnum.Guests]: {
     create: '',

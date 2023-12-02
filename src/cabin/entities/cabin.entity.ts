@@ -60,7 +60,6 @@ export class CabinEntity extends DocumentWithTimeStamps {
   @Expose()
   @IsNumber()
   @IsNotEmpty()
-  @IsPositive()
   @Prop({ required: true })
   @ApiProperty({ required: true })
   discount: number;

@@ -9,6 +9,7 @@ import { CabinModule } from './cabin/cabin.module';
 import { GuestModule } from './guest/guest.module';
 import { SettingsModule } from './settings/settings.module';
 import { BookingModule } from './booking/booking.module';
+import { StorageModule } from './storage/storage.module';
 
 @Module({
   imports: [
@@ -27,6 +28,7 @@ import { BookingModule } from './booking/booking.module';
     GuestModule,
     SettingsModule,
     BookingModule,
+    StorageModule,
   ],
   controllers: [],
   providers: [AppService, ConfigService],

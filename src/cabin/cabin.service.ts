@@ -3,9 +3,12 @@ import {
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
 import { ReturnModelType } from '@typegoose/typegoose';
+
 import { SerializeService } from 'libraries/serializer/serialize';
 import { InjectModel } from 'nestjs-typegoose';
+import { StorageService } from 'src/storage/storage.service';
 import {
   CabinDto,
   CabinPaginatedDto,
@@ -20,6 +23,8 @@ export class CabinService extends SerializeService<CabinEntity> {
   constructor(
     @InjectModel(CabinEntity)
     private readonly cabinModel: ReturnModelType<typeof CabinEntity>,
+    private readonly configService: ConfigService,
+    private readonly storageService: StorageService,
   ) {
     super(CabinEntity);
   }
@@ -103,5 +108,16 @@ export class CabinService extends SerializeService<CabinEntity> {
     if (!cabin) throw new NotFoundException('Cabin is not found');
 
     return this.toJSON(cabin, CabinDto);
+  }
+
+  async uploadImage(userId: string, image: Express.Multer.File) {
+    const fileUrl = await this.storageService.uploadFile(
+      userId,
+      'cabins',
+      image,
+    );
+    if (!fileUrl) throw new BadRequestException('File could not be uploaded');
+
+    return fileUrl;
   }
 }

@@ -10,6 +10,8 @@ async function bootstrap() {
 
   const configService: ConfigService = app.get(ConfigService);
   const PORT = configService.get('PORT');
+  const firebase = configService.get('firebase');
+  console.log('🚀 ~ file: main.ts:14 ~ bootstrap ~ firebase:', firebase);
 
   const validationPipe = new ValidationPipe({
     whitelist: true,

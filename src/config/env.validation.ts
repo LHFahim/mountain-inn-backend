@@ -21,6 +21,30 @@ class EnvironmentVariables {
   @IsDefined()
   @IsString()
   JWT_REFRESH_TOKEN_EXPIRES_IN: string;
+
+  @IsDefined()
+  @IsString()
+  API_KEY: string;
+
+  @IsDefined()
+  @IsString()
+  AUTH_DOMAIN: string;
+
+  @IsDefined()
+  @IsString()
+  PROJECT_ID: string;
+
+  @IsDefined()
+  @IsString()
+  STORAGE_BUCKET: string;
+
+  @IsDefined()
+  @IsString()
+  MESSAGING_SENDER_ID: string;
+
+  @IsDefined()
+  @IsString()
+  APP_ID: string;
 }
 
 export const validate = (config: Record<string, unknown>) => {
