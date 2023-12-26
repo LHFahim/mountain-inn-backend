@@ -67,6 +67,8 @@ export class BookingService extends SerializeService<BookingEntity> {
       .find({
         isActive: true,
         isDeleted: false,
+
+        ...(query.status && { status: query.status }),
       })
       .populate('guest')
       .populate('cabin')
@@ -74,14 +76,12 @@ export class BookingService extends SerializeService<BookingEntity> {
       .limit(query.pageSize)
       .skip((query.page - 1) * query.pageSize);
 
-    const bookingsCount = await this.bookingModel
-      .countDocuments({
-        isActive: true,
-        isDeleted: false,
-      })
-      .sort({ [query.sortBy]: query.sort })
-      .limit(query.pageSize)
-      .skip((query.page - 1) * query.pageSize);
+    const bookingsCount = await this.bookingModel.countDocuments({
+      isActive: true,
+      isDeleted: false,
+
+      ...(query.status && { status: query.status }),
+    });
 
     return {
       items: this.toJSONs(bookings, BookingDto),
