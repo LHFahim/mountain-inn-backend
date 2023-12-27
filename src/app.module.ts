@@ -10,6 +10,7 @@ import { GuestModule } from './guest/guest.module';
 import { SettingsModule } from './settings/settings.module';
 import { BookingModule } from './booking/booking.module';
 import { StorageModule } from './storage/storage.module';
+import { ProfileModule } from './profile/profile.module';
 
 @Module({
   imports: [
@@ -29,6 +30,7 @@ import { StorageModule } from './storage/storage.module';
     SettingsModule,
     BookingModule,
     StorageModule,
+    ProfileModule,
   ],
   controllers: [],
   providers: [AppService, ConfigService],

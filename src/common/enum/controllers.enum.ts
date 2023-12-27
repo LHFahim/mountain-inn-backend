@@ -5,4 +5,6 @@ export enum ControllersEnum {
   Bookings = 'bookings',
   Guests = 'guests',
   Settings = 'settings',
+
+  Profile = 'profile',
 }

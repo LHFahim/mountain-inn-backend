@@ -41,4 +41,8 @@ export const Routes = {
     updateOne: ':id',
     deleteOne: ':id',
   },
+
+  [ControllersEnum.Profile]: {
+    myProfile: '',
+  },
 } as const;
