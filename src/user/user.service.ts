@@ -21,6 +21,33 @@ export class UserService extends SerializeService<UserEntity> {
     super(UserEntity);
   }
 
+  async onModuleInit() {
+    await this.userModel.updateOne(
+      { email: 'fahimlutful@gmail.com' },
+      {
+        $setOnInsert: {
+          firstName: 'Fahim',
+          lastName: 'Hassan',
+          email: 'fahimlutful@gmail.com',
+          phone: '+8801782446508',
+
+          avatarURL:
+            'https://media.licdn.com/dms/image/C4D03AQECx6E5c-nGew/profile-displayphoto-shrink_400_400/0/1657438384980?e=1709164800&v=beta&t=NC_bM_hZtzup3D14Qy-jijuxgrN7_EQyBGmgZvJ4Vek',
+          authProvider: AuthProvider.EMAIL,
+          isEmailVerified: true,
+
+          panelType: PanelType.ADMIN,
+
+          lastLogin: null,
+
+          isActive: true,
+          isDeleted: false,
+        },
+      },
+      { upsert: true },
+    );
+  }
+
   async findUserByEmail(email: string) {
     return await this.userModel.findOne({ email });
   }
