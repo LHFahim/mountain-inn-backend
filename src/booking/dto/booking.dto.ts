@@ -1,6 +1,6 @@
 import { ApiProperty, PartialType, PickType } from '@nestjs/swagger';
 import { Expose } from 'class-transformer';
-import { IsEnum, IsOptional } from 'class-validator';
+import { IsDateString, IsEnum, IsOptional } from 'class-validator';
 import { PaginationQueryDto } from 'src/common/dto/pagination-query.dto';
 import { PaginationDto } from 'src/common/dto/pagination.dto';
 import { BookingEntity, BookingStatus } from '../entities/booking.entity';
@@ -33,6 +33,11 @@ export class BookingQueryDto extends PaginationQueryDto {
     default: BookingStatus.UNCONFIRMED,
   })
   status: BookingStatus;
+
+  @IsOptional()
+  @IsDateString()
+  @ApiProperty({ required: false })
+  startDate: string;
 }
 export class BookingPaginatedDto {
   @Expose()

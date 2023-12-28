@@ -69,6 +69,8 @@ export class BookingService extends SerializeService<BookingEntity> {
         isDeleted: false,
 
         ...(query.status && { status: query.status }),
+
+        ...(query.startDate && { startDate: { $gte: query.startDate } }),
       })
       .populate('guest')
       .populate('cabin')
@@ -81,6 +83,8 @@ export class BookingService extends SerializeService<BookingEntity> {
       isDeleted: false,
 
       ...(query.status && { status: query.status }),
+
+      ...(query.startDate && { startDate: { $gte: query.startDate } }),
     });
 
     return {
